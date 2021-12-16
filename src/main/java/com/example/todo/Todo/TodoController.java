@@ -8,20 +8,29 @@ import java.util.List;
 @RestController
 public class TodoController {
 
-    private final List<String> todoList = new ArrayList<>();
+    private final List<ToDo> toDoList = new ArrayList<>();
 
     @GetMapping("/todos")
-    public List<String> listTodos() {
-        return todoList;
+    public List<ToDo> listTodos() {
+        return toDoList;
     }
 
     @PostMapping("/todos")
-    public void addTodo(@RequestBody String todo) {
-        todoList.add(todo);
+    public void addToDo(@RequestBody ToDo toDoObject) {
+        toDoList.add(toDoObject);
     }
 
     @PutMapping("/todos/{id}")
-    public void updateTodo(@PathVariable int id, @RequestBody String newTodo) {
-        todoList.set(id, newTodo);
+    public void updateTodo(@PathVariable int id, @RequestBody ToDo newTodo) {
+        toDoList.set(id, newTodo);
     }
+
+    @DeleteMapping("/todos/{id}")
+    public void deleteTodo(@PathVariable int id) {
+        toDoList.removeIf(toDoObject -> toDoObject.id == id);}
+}
+
+class ToDo {
+    public int id;
+    public String title;
 }
